@@ -474,6 +474,14 @@ class Protocol74(Protocol73):
     def protocolToken(self):
         return "SingingPotato"
 
+class Protocol75(Protocol74):
+
+    def version(self):
+        return 75
+
+    def protocolToken(self):
+        return "SweetRock"
+
 
 # Current rev in mythversion.h
 protocols = {
@@ -507,5 +515,7 @@ protocols = {
     71: Protocol71(),  # 0.25 - ASK_RECORDING GET_FREE_INPUTS
     72: Protocol72(),  # 0.25 - QUERY_ACTIVE_BACKENDS
     73: Protocol73(),  # 0.26 - RESCHEDULE_RECORDINGS 
-    74: Protocol74()   # 0.26
+    74: Protocol74(),  # 0.26 - no changes
+    75: Protocol75()   # 0.26 - no changes (time query changes)
+
 }    
