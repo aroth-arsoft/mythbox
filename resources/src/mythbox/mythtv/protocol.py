@@ -75,7 +75,7 @@ class Protocol40(BaseProtocol):
                  'subtitle_type']
 
     def hasOriginalAirDate(self, program):
-        return int(program.getField('hasairdate')) == 1
+        return int(program._data['hasairdate']) == 1
     
     def tvState(self):
         return TVState
@@ -91,7 +91,7 @@ class Protocol40(BaseProtocol):
         return MythLiveTvBrain(settings, translator)
 
     def getFileSize(self, program):
-        return self.decodeLongLong(int(program.getField('fs_low')), int(program.getField('fs_high'))) / 1024.0
+        return self.decodeLongLong(int(program._data['fs_low']), int(program._data['fs_high'])) / 1024.0
 
     def genPixMapCommand(self):
         return ['QUERY_GENPIXMAP']        
@@ -283,7 +283,7 @@ class Protocol57(Protocol56):
         return ["ANN FileTransfer %s 0" % hostname, filePath, 'Default']
 
     def getFileSize(self, program):
-        return int(program.getField('filesize')) / 1024.0
+        return int(program._data['filesize']) / 1024.0
 
     def supportsStreaming(self, platform):
         # Eden and up
