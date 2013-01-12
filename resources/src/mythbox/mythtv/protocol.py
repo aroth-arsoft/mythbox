@@ -509,6 +509,14 @@ class Protocol76(Protocol75):
                  'video_props',  'subtitle_type','year',
                  'part_number',  'part_total']
 
+class Protocol77(Protocol76):
+
+    def version(self):
+        return 77
+
+    def protocolToken(self):
+        return "WindMark"
+
 # Current rev in mythversion.h
 protocols = {
     40: Protocol40(), # 0.21
@@ -543,5 +551,6 @@ protocols = {
     73: Protocol73(),  # 0.26 - RESCHEDULE_RECORDINGS 
     74: Protocol74(),  # 0.26 - no changes
     75: Protocol75(),  # 0.26 - no changes (time query changes)
-    76: Protocol76()   # 0.27 - Added part_number,part_total,syndicatedepisode
+    76: Protocol76(),   # 0.27 - Added part_number,part_total,syndicatedepisode
+    77: Protocol77()   # 0.27 - Added part_number,part_total,syndicatedepisode
 }    
