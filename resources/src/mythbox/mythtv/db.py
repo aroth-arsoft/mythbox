@@ -23,9 +23,12 @@ import odict
 import string
 
 from mythbox.mythtv.enums import RecordingStatus, JobType
+from mythbox.mythtv import protocol
 from decorator import decorator
 from mythbox import pool
 from mythbox.pool import PoolableFactory
+from datetime import timedelta
+
 from mythbox.util import timed, threadlocals, safe_str
 from mysql.connector import errors
         
@@ -162,6 +165,7 @@ class MythDatabase(object):
         # Static data cached on demand
         self._master = None
         self._slaves = None
+	self.protocol = None
         self.initWithSettings(*args)
 
     def initWithSettings(self, settings, translator=None, domainCache=None):
@@ -474,8 +478,13 @@ class MythDatabase(object):
         @type channels: Channel[] 
         @rtype: dict(Channel, TVProgram[])
         """
-        strStartTime = startTime.strftime("%Y%m%d%H%M%S")
-        strEndTime = endTime.strftime("%Y%m%d%H%M%S")
+	if not self.protocol:
+	     self.protocol = protocol.protocols[protocol.serverVersion]
+	offset = self.protocol.dbTimeOffset()
+	startTime2 = startTime + timedelta(minutes=offset)
+	endTime2 = endTime  + timedelta(minutes=offset)
+        strStartTime = startTime2.strftime("%Y%m%d%H%M%S")
+        strEndTime = endTime2.strftime("%Y%m%d%H%M%S")
 
         sql = """
             select
@@ -484,8 +493,8 @@ class MythDatabase(object):
                 c.callsign,
                 c.icon,
                 c.name as channame,                
-                p.starttime,
-                p.endtime,
+                DATE_ADD(p.starttime,INTERVAL %s MINUTE) as starttime,
+                DATE_ADD(p.endtime,INTERVAL %s MINUTE) as endtime,
                 p.title,
                 p.subtitle,
                 p.description,
@@ -513,7 +522,8 @@ class MythDatabase(object):
             order by 
                 c.chanid, 
                 p.starttime
-                """ % (','.join(map(lambda c: str(c.getChannelId()), channels)),
+                """ % (-1*offset,-1*offset,
+		       ','.join(map(lambda c: str(c.getChannelId()), channels)),
                        strStartTime, strEndTime,
                        strStartTime, strEndTime,
                        strStartTime, strEndTime,

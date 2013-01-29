@@ -18,6 +18,7 @@
 #
 
 from mythbox.mythtv.enums import TVState, TVState44, TVState58
+import time
 
 # MythTV Protcol Constants
 initVersion = 8
@@ -136,6 +137,11 @@ class Protocol40(BaseProtocol):
         """
         return long64Bits & 0xffffffffL, long64Bits >> 32
 
+    def dbTimeOffset(self):
+        """
+        @return: minutes between local time and db time
+        """
+        return 0
 
 class Protocol41(Protocol40):
     
@@ -481,6 +487,12 @@ class Protocol75(Protocol74):
 
     def protocolToken(self):
         return "SweetRock"
+
+    def dbTimeOffset(self):
+	if time.localtime(time.time()).tm_isdst and time.daylight:
+            return time.altzone/60
+        else:
+            return time.timezone/60
 
 class Protocol76(Protocol75):
 
