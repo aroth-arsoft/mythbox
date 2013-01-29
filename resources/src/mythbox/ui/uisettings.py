@@ -118,7 +118,7 @@ class Setting(object):
 	#Frodo hacks as type(self.widget) always returns xbmcgui.Control
 	override_detector=False
 	manual_is_radio=False
-	if type(self.widget) == xbmcgui.Control:
+	if hasattr(xbmcgui,"Control") and type(self.widget) == xbmcgui.Control:
 	    override_detector=True
 	    if self.widget.getId() in [208, 206, 207, 401, 406, 402, 403, 404, 501, 502]:
 	        manual_is_radio=True
