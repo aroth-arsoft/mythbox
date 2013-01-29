@@ -270,7 +270,7 @@ class WindowMixin(object):
 class BaseWindow(xbmcgui.WindowXML, WindowMixin):
     
     def __init__(self, *args, **kwargs):
-        xbmcgui.WindowXML.__init__(self, *args, **kwargs)
+        xbmcgui.WindowXML.__init__(self)
         self.win = None        
         self.closed = False
         

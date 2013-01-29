@@ -53,7 +53,7 @@ class Group(object):
         self.title = title
         self.programs = []
         self.listItems = []
-        self.programsByListItem = bidict.bidict()
+        self.programsByListItemKey = bidict.bidict()
         self.episodesDone = False
         self.postersDone = False
         self.backgroundsDone = False
@@ -72,12 +72,11 @@ class Group(object):
         group         = %s
         num programs  = %d 
         num listitems = %d
-        num li map    = %d """ % (safe_str(self.title), len(self.programs), len(self.listItems), len(self.programsByListItem))
+        num li map    = %d """ % (safe_str(self.title), len(self.programs), len(self.listItems), len(self.programsByListItemKey))
         return s
 
 
 class RecordingsWindow(BaseWindow):
-        
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
         # inject dependencies from constructor
@@ -318,8 +317,9 @@ class RecordingsWindow(BaseWindow):
         def constructorTime():
             for p in self.activeGroup.programs:
                 listItem = xbmcgui.ListItem()
+		listItem.setProperty("key",str(id(p)));
                 self.activeGroup.listItems.append(listItem)
-                self.activeGroup.programsByListItem[listItem] = p
+                self.activeGroup.programsByListItemKey[listItem.getProperty("key")] = p
         
         @timed 
         def propertyTime(): 
@@ -361,10 +361,10 @@ class RecordingsWindow(BaseWindow):
             self.updateListItemProperty(group.listItem, 'num_episodes', str(len(group.programs)))
 
             # if not rendered before, listItems will not have been realized
-            if deletedProgram in group.programsByListItem.inv:
-                listItem = group.programsByListItem[:deletedProgram]
+            if deletedProgram in group.programsByListItemKey.inv:
+                listItem = group.programsByListItemKey[:deletedProgram.getProperty("key")]
                 group.listItems.remove(listItem)
-                del group.programsByListItem[listItem]
+                del group.programsByListItemKey[listItem.getProperty("key")]
 
                 # re-index
                 for i, listItem in enumerate(group.listItems):
@@ -417,7 +417,8 @@ class RecordingsWindow(BaseWindow):
         
     @catchall
     def renderPosters(self, myRenderToken, myGroup):
-        for (listItem, program) in myGroup.programsByListItem.items()[:]:
+        for listItem in myGroup.listItems:
+	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
             if hasattr(program, 'poster'):
                 self.updateListItemProperty(listItem, 'poster', program.poster)
             else:
@@ -425,7 +426,8 @@ class RecordingsWindow(BaseWindow):
 
     @catchall
     def renderBackgrounds(self, myRenderToken, myGroup):
-        for (listItem, program) in myGroup.programsByListItem.items()[:]:
+        for listItem in myGroup.listItems:
+	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
             if hasattr(program, 'background'):
                 self.updateListItemProperty(listItem, 'background', program.background)
             else:
@@ -433,7 +435,8 @@ class RecordingsWindow(BaseWindow):
 
     @catchall
     def renderEpisodeColumn(self, myRenderToken, myGroup):
-        for (listItem, program) in myGroup.programsByListItem.items()[:]:
+        for listItem in myGroup.listItems:
+	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
             if hasattr(program, 'seasonEpisode'):
                 self.updateListItemProperty(listItem, 'episode', program.seasonEpisode)
             else:
@@ -515,7 +518,7 @@ class RecordingsWindow(BaseWindow):
         if not selectedItem:
             return
         
-        selectedProgram = self.activeGroup.programsByListItem[selectedItem]
+        selectedProgram = self.activeGroup.programsByListItemKey[selectedItem.getProperty("key")]
         if not selectedProgram:
             return
         

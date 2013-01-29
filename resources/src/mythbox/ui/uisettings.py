@@ -114,8 +114,16 @@ class Setting(object):
 
     def render(self):
         value = self.store.get(self.key)
-        
-        if type(self.widget) == xbmcgui.ControlButton:
+
+	#Frodo hacks as type(self.widget) always returns xbmcgui.Control
+	override_detector=False
+	manual_is_radio=False
+	if type(self.widget) == xbmcgui.Control:
+	    override_detector=True
+	    if self.widget.getId() in [208, 206, 207, 401, 406, 402, 403, 404, 501, 502]:
+	        manual_is_radio=True
+
+        if type(self.widget) == xbmcgui.ControlButton or (override_detector and manual_is_radio == False):
             if self.type == str:
                 self.widget.setLabel(label=self.widget.getLabel(), label2=value)
             elif self.type == int:
@@ -126,7 +134,7 @@ class Setting(object):
                 self.widget.setLabel(label=self.widget.getLabel(), label2='%s seconds' % str(int(value) * -1))                
             else:
                 raise Exception('Dont know how to handle type %s in render()' % self.type)
-        elif type(self.widget) == xbmcgui.ControlRadioButton:
+        elif type(self.widget) == xbmcgui.ControlRadioButton or (override_detector and manual_is_radio):
             if self.type == bool:
                 self.widget.setSelected(self.store.get(self.key) in ('True', 'true', '1'))
             else:

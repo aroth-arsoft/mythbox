@@ -58,7 +58,7 @@ class UpcomingRecordingsWindow(BaseWindow):
         self.channelsById = None                 # {int:Channel}
         self.tunersById = None                   # {int:Tuner}
         self.listItemsByProgram = odict.odict()  # {Program:ListItem}
-        self.programsByListItem = odict.odict()  # {ListItem:Program}
+        self.programsByListItemKey = odict.odict()  # {ListItem:Program}
         self.sortBy = self.settings.get('upcoming_sort_by')
         self.sortAscending = self.settings.getBoolean('upcoming_sort_ascending')
         self.activeRenderToken = None
@@ -96,7 +96,7 @@ class UpcomingRecordingsWindow(BaseWindow):
     def onEditSchedule(self):
         log.debug('Launching edit recording schedule dialog...')
         listItem = self.programsListBox.getSelectedItem()
-        program = self.programsByListItem[listItem]
+        program = self.programsByListItemKey[listItem.getProperty("key")]
         scheduleId = program.getScheduleId()
         if not scheduleId:
             xbmcgui.Dialog().ok(self.translator.get(m.ERROR), self.translator.get(m.ERR_NO_RECORDING_SCHEDULE))
@@ -151,7 +151,7 @@ class UpcomingRecordingsWindow(BaseWindow):
     @inject_conn
     def render(self):
         self.listItemsByProgram.clear()
-        self.programsByListItem.clear()
+        self.programsByListItemKey.clear()
         listItems = []
         
         log.debug('Rendering %d upcoming recordings...' % len(self.programs))
@@ -160,6 +160,7 @@ class UpcomingRecordingsWindow(BaseWindow):
             previous = None
             for i, p in enumerate(self.programs):
                 listItem = xbmcgui.ListItem()
+		listItem.setProperty("key",str(id(p)));
                 self.setListItemProperty(listItem, 'airdate', self.formattedAirDate(previous, p))    
                 self.setListItemProperty(listItem, 'title', p.title())
                 self.setListItemProperty(listItem, 'description', p.formattedDescription())
@@ -177,7 +178,7 @@ class UpcomingRecordingsWindow(BaseWindow):
                 
                 listItems.append(listItem)
                 self.listItemsByProgram[p] = listItem
-                self.programsByListItem[listItem] = p
+                self.programsByListItemKey[listItem.getProperty("key")] = p
                 previous = p
 
         buildListItems()
