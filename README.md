@@ -9,14 +9,14 @@ watching TV a simple (wife tested!) and enjoyable experience using only your rem
 Features
 ------
 - Watch recordings with commercial skipping
-- Watch Live TV
+- Watch Live TV (handled by XBMC directly not the plugin)
 - Create and update recording schedules
 - View upcoming recordings 
 - Enhanced program guide
 - Fanart downloaded from tvdb, tmdb, imdb, and google image search
 - Season and episode numbers downloaded from tvrage and tvdb
 - View tuner and job queue info
-- Compatible with MythTV 0.21-0.25+
+- Compatible with MythTV 0.21-0.26+
 - Add your own public Twitter feeds
 - Move comm flagging jobs to the front of the queue
 - Trigger user jobs, comm flagging, or transcoding for a recording
@@ -25,8 +25,8 @@ Prerequisites
 -----
   
 - All Platforms
-    - XBMC 11.x (Eden)
-    - A working MythTV 0.24/0.25 backend
+    - XBMC 11.x (Eden) or XBMC 12.x(Frodo)
+    - A working MythTV backend version 0.24 or higher
 
 - Linux
     - 32-bit or 64-bit distro (Ubuntu, Debian, Fedora, Gentoo, Arch, OpenSuse, etc) 
@@ -35,7 +35,7 @@ Prerequisites
     - Mac OS X 10.6.7 or newer - Intel only 
 
 - Windows
-    - Windows XP, Vista, or Windows 7
+    - Windows XP, Vista, Windows 7, Windows 8
   
 - iOS (iPad/iPhone/ATV2)
     - Jailbroken device
