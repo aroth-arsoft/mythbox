@@ -362,9 +362,16 @@ class RecordingsWindow(BaseWindow):
 
             # if not rendered before, listItems will not have been realized
             if deletedProgram in group.programsByListItemKey.inv:
-                listItem = group.programsByListItemKey[:deletedProgram.getProperty("key")]
-                group.listItems.remove(listItem)
-                del group.programsByListItemKey[listItem.getProperty("key")]
+                listItemKey = group.programsByListItemKey[:deletedProgram]
+		listItem = None
+		for item in group.listItems:
+		    if item.getProperty("key") == listItemKey:
+		        listItem = item
+			break
+		if listItem is not None:
+                    group.listItems.remove(listItem)
+
+                del group.programsByListItemKey[listItemKey]
 
                 # re-index
                 for i, listItem in enumerate(group.listItems):
@@ -437,14 +444,9 @@ class RecordingsWindow(BaseWindow):
     def renderEpisodeColumn(self, myRenderToken, myGroup):
         for listItem in myGroup.listItems:
 	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
-            if program.hasSeasonAndEpisode():
-                # from mythtv db
-                self.updateListItemProperty(listItem, 'episode', program.formattedSeasonAndEpisode())
-            elif hasattr(program, 'seasonEpisode'):
-                # cached on program
+            if hasattr(program, 'seasonEpisode'):
                 self.updateListItemProperty(listItem, 'episode', program.seasonEpisode)
             else:
-                # delegate to fanart lookup
                 self.episodeQueue.put((program, myRenderToken, listItem))
                 
     def sameBackground(self, program):
