@@ -75,6 +75,7 @@ class Setting(object):
     @todo Convert to use window properies instead of widget.get()/set()
     """
     
+    checkbox_controls = [208, 206, 207, 401, 406, 402, 403, 404, 501, 502]
     def __init__(self, store, key, type, validator, widget):
         """
         @param store: MythSettings backing store for settings that gets persisted
@@ -103,7 +104,7 @@ class Setting(object):
             ok, value = enterNumeric(control=self.widget, validator=self.validator, current= str(int(self.store.get(self.key)) * -1))
             if value != '0':
                 value = '-' + value
-        elif self.type == bool and type(self.widget) == xbmcgui.ControlRadioButton:
+        elif self.type == bool and (type(self.widget) == xbmcgui.ControlRadioButton or self.widget.getId() in Setting.checkbox_controls):
             ok, value = True, ['False', 'True'][self.widget.isSelected()]
         else:
             log.warn('readinput() not activated for type %s and widget %s' % (self.type, type(self.widget)))
@@ -120,7 +121,7 @@ class Setting(object):
 	manual_is_radio=False
 	if hasattr(xbmcgui,"Control") and type(self.widget) == xbmcgui.Control:
 	    override_detector=True
-	    if self.widget.getId() in [208, 206, 207, 401, 406, 402, 403, 404, 501, 502]:
+	    if self.widget.getId() in Setting.checkbox_controls:
 	        manual_is_radio=True
 
         if type(self.widget) == xbmcgui.ControlButton or (override_detector and manual_is_radio == False):
