@@ -91,6 +91,7 @@ class ScheduleType(object):
     DONT_RECORD   = 8
     FIND_DAILY    = 9
     FIND_WEEKLY   = 10
+    TEMPLATE      = 11
     
     translations = odict([
         (ONCE         ,111),
@@ -103,7 +104,8 @@ class ScheduleType(object):
         (ALWAYS       ,114),
         (OVERRIDE     ,117),
         (DONT_RECORD  ,118),
-        (NOT_RECORDING,170)])
+        (NOT_RECORDING,170),
+		(TEMPLATE,11)])
     
     long_translations = odict([
         (ONCE         ,135),
