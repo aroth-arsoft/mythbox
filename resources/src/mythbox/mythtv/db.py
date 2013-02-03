@@ -166,6 +166,7 @@ class MythDatabase(object):
         self._master = None
         self._slaves = None
         self.protocol = None
+        self.dbTimeOffset = None
         self.initWithSettings(*args)
 
     def initWithSettings(self, settings, translator=None, domainCache=None):
@@ -404,7 +405,7 @@ class MythDatabase(object):
             and r.starttime = rs.starttime
             order by rs.mark desc
             limit 1 
-            ''' % (recording.getChannelId(), recording.starttimeAsTime())       
+            ''' % (recording.getChannelId(), recording.starttimeAsTime() + timedelta(minutes=self.getDbTimeOffset()) )       
         fps = float(29.97)
         self.cursor.execute(sql)
         for row in self.cursor.fetchall():
@@ -421,14 +422,6 @@ class MythDatabase(object):
             except TypeError, te:
                 log.warn('Decimal to float conversion failed for "%s" with error %s. Returning default of 29.97' % (fps, safe_str(te)))
         
-        # since we're deriving an approximation from the recordedseek table, just fudge to the
-        # most obvious correct values
-        if fps >= 28.0 and fps <= 32.0:
-            fps = float(29.97)
-        elif fps >= 57.0 and fps <= 62.0:
-            fps = float(59.94)
-        elif fps >= 22.0 and fps <= 26.0:
-            fps = float(24.0)
         return fps
     
     @timed
@@ -469,6 +462,16 @@ class MythDatabase(object):
                 translator=self.translator)) 
         return tuners
 
+    def getDbTimeOffset(self):
+        """
+        @rtype: int(seconds)
+        """
+        if self.dbTimeOffset is None:
+            if not self.protocol:
+                self.protocol = protocol.protocols[protocol.serverVersion]
+            self.dbTimeOffset = self.protocol.dbTimeOffset()
+        return self.dbTimeOffset
+
     @timed
     @inject_cursor
     def getTVGuideData(self, startTime, endTime, channels):
@@ -478,13 +481,10 @@ class MythDatabase(object):
         @type channels: Channel[] 
         @rtype: dict(Channel, TVProgram[])
         """
-        if not self.protocol:
-            self.protocol = protocol.protocols[protocol.serverVersion]
-        offset = self.protocol.dbTimeOffset()
-        startTime2 = startTime + timedelta(minutes=offset)
-        endTime2 = endTime  + timedelta(minutes=offset)
-        strStartTime = startTime2.strftime("%Y%m%d%H%M%S")
-        strEndTime = endTime2.strftime("%Y%m%d%H%M%S")
+        startTimeOffset = startTime + timedelta(minutes=self.getDbTimeOffset())
+        endTimeOffset = endTime  + timedelta(minutes=self.getDbTimeOffset())
+        strStartTime = startTimeOffset.strftime("%Y%m%d%H%M%S")
+        strEndTime = endTimeOffset.strftime("%Y%m%d%H%M%S")
 
         sql = """
             select
@@ -742,7 +742,7 @@ class MythDatabase(object):
         if program is not None:
             where += "chanid = %s " % program.getChannelId()
             where += "and "
-            where += "starttime = '%s' " % program.starttimeAsTime()
+            where += "starttime = '%s' " % program.starttimeAsTime() + timedelta(minutes=self.getDbTimeOffset())
             
         if jobType is not None:
             if program is not None:
