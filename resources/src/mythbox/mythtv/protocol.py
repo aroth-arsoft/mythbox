@@ -489,7 +489,7 @@ class Protocol75(Protocol74):
         return "SweetRock"
 
     def dbTimeOffset(self):
-	if time.localtime(time.time()).tm_isdst and time.daylight:
+        if time.localtime(time.time()).tm_isdst and time.daylight:
             return time.altzone/60
         else:
             return time.timezone/60

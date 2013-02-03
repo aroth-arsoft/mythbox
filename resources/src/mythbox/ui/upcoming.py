@@ -160,7 +160,7 @@ class UpcomingRecordingsWindow(BaseWindow):
             previous = None
             for i, p in enumerate(self.programs):
                 listItem = xbmcgui.ListItem()
-		listItem.setProperty("key",str(id(p)));
+                listItem.setProperty("key",str(id(p)));
                 self.setListItemProperty(listItem, 'airdate', self.formattedAirDate(previous, p))    
                 self.setListItemProperty(listItem, 'title', p.title())
                 self.setListItemProperty(listItem, 'description', p.formattedDescription())

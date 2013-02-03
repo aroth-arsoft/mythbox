@@ -105,7 +105,7 @@ class ScheduleType(object):
         (OVERRIDE     ,117),
         (DONT_RECORD  ,118),
         (NOT_RECORDING,170),
-		(TEMPLATE,11)])
+        (TEMPLATE,11)])
     
     long_translations = odict([
         (ONCE         ,135),

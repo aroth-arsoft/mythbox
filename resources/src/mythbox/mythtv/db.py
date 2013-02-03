@@ -165,7 +165,7 @@ class MythDatabase(object):
         # Static data cached on demand
         self._master = None
         self._slaves = None
-	self.protocol = None
+        self.protocol = None
         self.initWithSettings(*args)
 
     def initWithSettings(self, settings, translator=None, domainCache=None):
@@ -478,11 +478,11 @@ class MythDatabase(object):
         @type channels: Channel[] 
         @rtype: dict(Channel, TVProgram[])
         """
-	if not self.protocol:
-	     self.protocol = protocol.protocols[protocol.serverVersion]
-	offset = self.protocol.dbTimeOffset()
-	startTime2 = startTime + timedelta(minutes=offset)
-	endTime2 = endTime  + timedelta(minutes=offset)
+        if not self.protocol:
+            self.protocol = protocol.protocols[protocol.serverVersion]
+        offset = self.protocol.dbTimeOffset()
+        startTime2 = startTime + timedelta(minutes=offset)
+        endTime2 = endTime  + timedelta(minutes=offset)
         strStartTime = startTime2.strftime("%Y%m%d%H%M%S")
         strEndTime = endTime2.strftime("%Y%m%d%H%M%S")
 
@@ -523,7 +523,7 @@ class MythDatabase(object):
                 c.chanid, 
                 p.starttime
                 """ % (-1*offset,-1*offset,
-		       ','.join(map(lambda c: str(c.getChannelId()), channels)),
+               ','.join(map(lambda c: str(c.getChannelId()), channels)),
                        strStartTime, strEndTime,
                        strStartTime, strEndTime,
                        strStartTime, strEndTime,

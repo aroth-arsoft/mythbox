@@ -116,13 +116,14 @@ class Setting(object):
     def render(self):
         value = self.store.get(self.key)
 
-	#Frodo hacks as type(self.widget) always returns xbmcgui.Control
-	override_detector=False
-	manual_is_radio=False
-	if hasattr(xbmcgui,"Control") and type(self.widget) == xbmcgui.Control:
-	    override_detector=True
-	    if self.widget.getId() in Setting.checkbox_controls:
-	        manual_is_radio=True
+        #Frodo hacks as type(self.widget) always returns xbmcgui.Control
+        override_detector=False
+        manual_is_radio=False
+        if hasattr(xbmcgui,"Control") and type(self.widget) == xbmcgui.Control:
+            override_detector=True
+            if self.widget.getId() in Setting.checkbox_controls:
+                manual_is_radio=True
+
 
         if type(self.widget) == xbmcgui.ControlButton or (override_detector and manual_is_radio == False):
             if self.type == str:
