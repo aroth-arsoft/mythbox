@@ -53,7 +53,7 @@ class Group(object):
         self.title = title
         self.programs = []
         self.listItems = []
-        self.programsByListItemKey = bidict.bidict()
+        self.programsByListItem = bidict.bidict()
         self.episodesDone = False
         self.postersDone = False
         self.backgroundsDone = False
@@ -72,11 +72,82 @@ class Group(object):
         group         = %s
         num programs  = %d 
         num listitems = %d
-        num li map    = %d """ % (safe_str(self.title), len(self.programs), len(self.listItems), len(self.programsByListItemKey))
+        num li map    = %d """ % (safe_str(self.title), len(self.programs), len(self.listItems), len(self.programsByListItem))
         return s
 
 
+class ProgramListItem(object):
+    """
+    Wraps xbmcgui.ListItem so that RecordedProgram and ListItem
+    can maintain a mapping since object identity of ListItems
+    in Frodo has changed.
+    """
+    def __init__(self, program, *args, **kwargs):
+        self.program = program
+        self.delegate = xbmcgui.ListItem(*args, **kwargs)
+        self.delegate.setProperty('key', str(self.program.key()))
+
+    def __getattr__(self, name):
+        if name == 'getProperty':
+            return self.delegate.getProperty
+        if name == 'setProperty':
+            return self.delegate.setProperty
+        if name == 'setThumbnailImage':
+            return self.delegate.setThumbnailImage
+        raise AttributeError('ProgramListItem has no attribute %s' % str(name))
+
+    def __eq__(self, other):
+        return self.getProperty('key') == other.getProperty('key')
+
+
+class ProgramListBox(object):
+    """
+    xbmcgui.ListBox changed between Eden and Frodo. The ListItem object
+    that you put is no longer is the same instance that you get out.
+    Hence, you can no longer make comparisons based based on object identity.
+
+    To re-associate a program with it's associated ListItem, a key is set
+    as a property on the ListItem.
+
+    This ProgramListBox decorates xbmcgui.ListBox and handles the mapping
+    transparently so no code changes are necessary.
+
+    Since xbmcgui.ListItem is backed by native code, __getattr__ can't be
+    used to do straight delegation. Individual attributes have been setup
+    to delegate appropriately.
+    """
+    def __init__(self, delegate):
+        self.delegate = delegate
+        self.mapping = {}
+
+    def __getattr__(self, name):
+        if name == 'getSelectedPosition':
+            return self.delegate.getSelectedPosition
+        if name == 'selectItem':
+            return self.delegate.selectItem
+
+        raise AttributeError('ProgramListBox has no attribute %s' % str(name))
+
+    def getSelectedItem(self):
+        """Proxy xbmcgui.ListItem with its associated ProgramLisItem"""
+        listItem = self.delegate.getSelectedItem()
+        key = listItem.getProperty('key')
+        return self.mapping[key]
+
+    def reset(self):
+        self.mapping.clear()
+        return self.delegate.reset()
+
+    def addItems(self, programItems):
+        listItems = []
+        for programItem in programItems:
+            self.mapping[programItem.getProperty('key')] = programItem
+            listItems.append(programItem.delegate)
+        self.delegate.addItems(listItems)
+
+
 class RecordingsWindow(BaseWindow):
+        
     def __init__(self, *args, **kwargs):
         BaseWindow.__init__(self, *args, **kwargs)
         # inject dependencies from constructor
@@ -107,7 +178,7 @@ class RecordingsWindow(BaseWindow):
         if not self.win:
             self.win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
             self.groupsListbox = self.getControl(ID_GROUPS_LISTBOX)
-            self.programsListbox = self.getControl(ID_PROGRAMS_LISTBOX)
+            self.programsListbox = ProgramListBox(self.getControl(ID_PROGRAMS_LISTBOX))
             self.readSettings()
             self.workerThread(self.episodeQueue, 'episode', self.cb_renderEpisode)
             self.workerThread(self.backgroundQueue, 'background', self.cb_renderBackground)
@@ -316,10 +387,9 @@ class RecordingsWindow(BaseWindow):
         @timed 
         def constructorTime():
             for p in self.activeGroup.programs:
-                listItem = xbmcgui.ListItem()
-		listItem.setProperty("key",str(id(p)));
+                listItem = ProgramListItem(p)
                 self.activeGroup.listItems.append(listItem)
-                self.activeGroup.programsByListItemKey[listItem.getProperty("key")] = p
+                self.activeGroup.programsByListItem[listItem] = p
         
         @timed 
         def propertyTime(): 
@@ -361,17 +431,10 @@ class RecordingsWindow(BaseWindow):
             self.updateListItemProperty(group.listItem, 'num_episodes', str(len(group.programs)))
 
             # if not rendered before, listItems will not have been realized
-            if deletedProgram in group.programsByListItemKey.inv:
-                listItemKey = group.programsByListItemKey[:deletedProgram]
-		listItem = None
-		for item in group.listItems:
-		    if item.getProperty("key") == listItemKey:
-		        listItem = item
-			break
-		if listItem is not None:
-                    group.listItems.remove(listItem)
-
-                del group.programsByListItemKey[listItemKey]
+            if deletedProgram in group.programsByListItem.inv:
+                listItem = group.programsByListItem[:deletedProgram]
+                group.listItems.remove(listItem)
+                del group.programsByListItem[listItem]
 
                 # re-index
                 for i, listItem in enumerate(group.listItems):
@@ -424,8 +487,7 @@ class RecordingsWindow(BaseWindow):
         
     @catchall
     def renderPosters(self, myRenderToken, myGroup):
-        for listItem in myGroup.listItems:
-	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
+        for (listItem, program) in myGroup.programsByListItem.items()[:]:
             if hasattr(program, 'poster'):
                 self.updateListItemProperty(listItem, 'poster', program.poster)
             else:
@@ -433,8 +495,7 @@ class RecordingsWindow(BaseWindow):
 
     @catchall
     def renderBackgrounds(self, myRenderToken, myGroup):
-        for listItem in myGroup.listItems:
-	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
+        for (listItem, program) in myGroup.programsByListItem.items()[:]:
             if hasattr(program, 'background'):
                 self.updateListItemProperty(listItem, 'background', program.background)
             else:
@@ -442,11 +503,15 @@ class RecordingsWindow(BaseWindow):
 
     @catchall
     def renderEpisodeColumn(self, myRenderToken, myGroup):
-        for listItem in myGroup.listItems:
-	    program = myGroup.programsByListItemKey[listItem.getProperty("key")]
-            if hasattr(program, 'seasonEpisode'):
+        for (listItem, program) in myGroup.programsByListItem.items()[:]:
+            if program.hasSeasonAndEpisode():
+                # from mythtv db
+                self.updateListItemProperty(listItem, 'episode', program.formattedSeasonAndEpisode())
+            elif hasattr(program, 'seasonEpisode'):
+                # cached on program
                 self.updateListItemProperty(listItem, 'episode', program.seasonEpisode)
             else:
+                # delegate to fanart lookup
                 self.episodeQueue.put((program, myRenderToken, listItem))
                 
     def sameBackground(self, program):
@@ -525,7 +590,7 @@ class RecordingsWindow(BaseWindow):
         if not selectedItem:
             return
         
-        selectedProgram = self.activeGroup.programsByListItemKey[selectedItem.getProperty("key")]
+        selectedProgram = self.activeGroup.programsByListItem[selectedItem]
         if not selectedProgram:
             return
         
