@@ -184,11 +184,11 @@ class RecordingDetailsWindow(BaseWindow):
                 return
             # Play via myth://
             p = StreamingPlayer(**deps)
-            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator))
+            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator, self.settings))
         else:
             # Play via local fs
             p = MountedPlayer(**deps)
-            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator))
+            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator, self.settings))
             del p 
     
     def playWithCommSkip(self):
@@ -200,11 +200,11 @@ class RecordingDetailsWindow(BaseWindow):
                 return
             # Play via myth://
             p = StreamingPlayer(**deps)
-            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator))
+            p.playRecording(NoOpCommercialSkipper(p, self.program, self.translator, self.settings))
         else:
             # Play via local fs
             p = MountedPlayer(**deps)
-            p.playRecording(TrackingCommercialSkipper(p, self.program, self.translator))
+            p.playRecording(TrackingCommercialSkipper(p, self.program, self.translator, self.settings))
             del p
         
     @inject_db
@@ -341,7 +341,7 @@ class RecordingDetailsWindow(BaseWindow):
         if self.program.isCommFlagged():
             if self.program.hasCommercials():
                 # Only move focus to Skip button if user hasn't changed the initial focus
-                if self.getFocusId() == self.playButton.getId():
+                if self.settings.isCommSkipDefault() and self.getFocusId() == self.playButton.getId():
                     self.setFocus(self.playSkipButton)
                 commBreaks = "%d" % len(self.program.getCommercials())
             else:

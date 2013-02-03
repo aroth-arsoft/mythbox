@@ -286,7 +286,7 @@ class HomeWindow(BaseWindow):
             p.playRecording(NoOpCommercialSkipper())
         else:    
             p = MountedPlayer(program=program, **to_kwargs(self, ['mythThumbnailCache', 'translator', 'platform']))
-            p.playRecording(TrackingCommercialSkipper(p, program, self.translator))
+            p.playRecording(TrackingCommercialSkipper(p, program, self.translator, self.settings))
         del p
             
     def goWatchRecordings(self):

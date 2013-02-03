@@ -448,6 +448,10 @@ To submit translations for your native language
   <string id="473">Seek Backward</string>
   <string id="474">Big Seek Forward</string>
   <string id="475">Big Seek Backward</string>
+  <string id="476">Play with commercial skipping by default</string>
+  <string id="477">After commercial skipping rewind this many seconds</string>
+  <string id="478">Commercial skip if you seek to the middle of a commercial</string>
+  <string id="479">Wait this many seconds into commercial before skipping</string>
   
 
 </strings>

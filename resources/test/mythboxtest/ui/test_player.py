@@ -95,6 +95,7 @@ class TrackingCommercialSkipperTest(unittest.TestCase):
         self.player.tracker = self.tracker
         
         self.program = Mock()
+        self.settings = Mock()
         when(self.program).title().thenReturn('movie.mpg')
         
     def test_RecordingWithNoCommBreaksDoesNothing(self):
@@ -104,7 +105,7 @@ class TrackingCommercialSkipperTest(unittest.TestCase):
         when(self.player).getTime().thenReturn(500)
         
         # Test
-        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator)
+        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator, self.settings)
         skipper.onPlayBackStarted()
         time.sleep(1)
         when(self.player).isPlaying().thenReturn(False)
@@ -120,7 +121,7 @@ class TrackingCommercialSkipperTest(unittest.TestCase):
         when(self.player).getTime().thenReturn(500)
         
         # Test
-        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator)
+        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator, self.settings)
         skipper.onPlayBackStarted()
         time.sleep(2)
         when(self.player).isPlaying().thenReturn(False)
@@ -144,7 +145,7 @@ class TrackingCommercialSkipperTest(unittest.TestCase):
         when(self.tracker).getHistory(any()).thenReturn(trackerHistory)
         
         # Test
-        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator)
+        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator, self.settings)
         skipper.onPlayBackStarted()
         time.sleep(1)
         when(self.player).isPlaying().thenReturn(False)
@@ -168,7 +169,7 @@ class TrackingCommercialSkipperTest(unittest.TestCase):
         when(self.tracker).getHistory(any()).thenReturn(trackerHistory)
         
         # Test
-        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator)
+        skipper = TrackingCommercialSkipper(self.player, self.program, self.translator, self.settings)
         skipper.onPlayBackStarted()
         time.sleep(1)
         when(self.player).isPlaying().thenReturn(False)

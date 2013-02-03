@@ -357,10 +357,11 @@ class TrackerSample(object):
 class ICommercialSkipper(object):
     """Common interface for commercial skipping implementations."""
     
-    def __init__(self, player, program, translator):
+    def __init__(self, player, program, translator, settings):
         self.player = player
         self.program = program
         self.translator = translator
+        self.settings = settings
         
     def onPlayBackStarted(self):
         raise NotImplementedError, 'Abstract base class'
@@ -374,8 +375,8 @@ class ICommercialSkipper(object):
 
 class NoOpCommercialSkipper(ICommercialSkipper):
 
-    def __init__(self, player=None, program=None, translator=None):
-        ICommercialSkipper.__init__(self, player, program, translator)
+    def __init__(self, player=None, program=None, translator=None, settings=None):
+        ICommercialSkipper.__init__(self, player, program, translator, settings)
 
     def onPlayBackStarted(self):
         pass
@@ -393,14 +394,17 @@ class TrackingCommercialSkipper(ICommercialSkipper):
     and skips commercials accordingly.
     """
     
-    def __init__(self, player, program, translator):
-        ICommercialSkipper.__init__(self, player, program, translator)
+    def __init__(self, player, program, translator, settings):
+        self.settings = settings
+        ICommercialSkipper.__init__(self, player, program, translator, settings)
         
     def onPlayBackStarted(self):
         log.debug('program in skipper = %s' % safe_str(self.program.title()))
         
         # don't want changes to commbreak.skipped to stick beyond the scope of 
         # this player instance so use a deepcopy
+        self.commSecondsRewind = int(self.settings.get('comm_skip_rewind_secs'))
+        self.commSecondsWait = int(self.settings.get('comm_skip_wait_secs'))
         self._breaks = copy.deepcopy(self.program.getCommercials())
         
         # Has a value when video position falls in a comm break
@@ -423,12 +427,21 @@ class TrackingCommercialSkipper(ICommercialSkipper):
 
     def _isInBreak(self, pos):
         for b in self._breaks:
-            if b.isDuring(pos):
+            if self._commIsDuring(b,pos):
                 self._currentBreak = b
                 return True
         self._currentBreak = None
         return False    
-    
+
+    def _commStartOffset(self, comm):
+        return comm.start+self.commSecondsWait
+
+    def _commEndOffset(self, comm):
+        return comm.end+self.commSecondsRewind
+
+    def _commIsDuring(self, comm, pos):
+        return pos >= self._commStartOffset(comm) and pos <= self._commEndOffset(comm)
+
     def _trackCommercials(self):
         """Method run in a separate thread to skip over commercials"""
         try:
@@ -443,14 +456,14 @@ class TrackingCommercialSkipper(ICommercialSkipper):
                     if self._isCloseToStartOfCommercial(pos) and not self._wasUserSkippingAround(pos): 
                         log.debug('Comm skip activated!')
                         showPopup(self.program.title(), self.translator.get(m.SKIPPING_COMMERCIAL) % formatSeconds(self._currentBreak.duration()), 3000)
-                        self.player.seekTime(self._currentBreak.end)
+                        self.player.seekTime(self._commEndOffset(self._currentBreak))
                         self._waitForPlayerToPassCommercialBreak()
                         self._currentBreak.skipped = True
                         
-                    if self._landedInCommercial(pos):
+                    if self.settings.isCommSkipOnJump() and self._landedInCommercial(pos):
                         log.debug("Landed in comm break and want to skip forward")  
                         showPopup(self.program.title(), self.translator.get(m.FORWARDING_THROUGH) % formatSeconds(self._currentBreak.duration()), 3000)
-                        self.player.seekTime(self._currentBreak.end)
+                        self.player.seekTime(self._commEndOffset(self._currentBreak))
                         self._waitForPlayerToPassCommercialBreak()
                         self._currentBreak.skipped = True
                 xbmc.sleep(SLEEP_MILLIS)
@@ -462,7 +475,7 @@ class TrackingCommercialSkipper(ICommercialSkipper):
         #samplesInCommercial = 4  # In commercial for 2 seconds
         secondsToSample = 4
         samples = self.player.tracker.getHistory(secondsToSample)
-        samplesInCommercial = len(filter(lambda x: self._currentBreak.isDuring(x.pos), samples))
+        samplesInCommercial = len(filter(lambda x: self._commIsDuring(self._currentBreak,x.pos), samples))
         log.debug('Samples in commercial = %d' % samplesInCommercial)
         return samplesInCommercial > 8 and samplesInCommercial < 12
     
@@ -494,8 +507,8 @@ class TrackingCommercialSkipper(ICommercialSkipper):
         played directly into the commercial vs. landing inside the commercial
         via ffwd, rewind, etc.
         """
-        windowStart = self._currentBreak.start - 1
-        windowEnd = self._currentBreak.start + 2
+        windowStart = self._commStartOffset(self._currentBreak) - 1
+        windowEnd = self._commStartOffset(self._currentBreak) + 2
         isClose = currPos >= windowStart and currPos <= windowEnd
         log.debug('User close to start of comm break = %s' % isClose) 
         return isClose
@@ -503,5 +516,5 @@ class TrackingCommercialSkipper(ICommercialSkipper):
     def _waitForPlayerToPassCommercialBreak(self):
         # TODO: What if user stops playing while in this loop? Add isPlaying() to loop invariant
         # wait for player pos to pass current break
-        while self._currentBreak.isDuring(self.player.getTime()):
+        while self._commIsDuring(self._currentBreak,self.player.getTime()):
             xbmc.sleep(SLEEP_MILLIS)

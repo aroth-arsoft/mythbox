@@ -75,7 +75,7 @@ class Setting(object):
     @todo Convert to use window properies instead of widget.get()/set()
     """
     
-    checkbox_controls = [208, 206, 207, 401, 406, 402, 403, 404, 501, 502]
+    checkbox_controls = [208, 206, 207, 401, 406, 402, 403, 404, 501, 502, 606, 608]
     def __init__(self, store, key, type, validator, widget):
         """
         @param store: MythSettings backing store for settings that gets persisted
@@ -222,6 +222,10 @@ class SettingsWindow(BaseWindow):
             self.register(Setting(self.advanced, 'video/timeseekbackward', NegativeSeconds, None, self.getControl(603)))
             self.register(Setting(self.advanced, 'video/timeseekforwardbig', Seconds, None, self.getControl(604)))
             self.register(Setting(self.advanced, 'video/timeseekbackwardbig', NegativeSeconds, None, self.getControl(605)))
+            self.register(Setting(self.settings, 'comm_skip_default', bool, None, self.getControl(606)))
+            self.register(Setting(self.settings, 'comm_skip_rewind_secs', NegativeSeconds, None, self.getControl(607)))
+            self.register(Setting(self.settings, 'comm_skip_wait_secs', Seconds, None, self.getControl(609)))
+            self.register(Setting(self.settings, 'comm_skip_skip_on_jump', bool, None, self.getControl(608)))
 
             self.render()
             

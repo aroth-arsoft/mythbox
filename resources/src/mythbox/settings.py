@@ -56,6 +56,9 @@ class MythSettings(object):
             pass
         self.bus = bus
 
+    def isCommSkipDefault(self): return self.getBoolean('comm_skip_default')
+    def isCommSkipOnJump(self): return self.getBoolean('comm_skip_skip_on_jump')
+
     def isConfirmOnDelete(self): return self.getBoolean('confirm_on_delete')
     
     def isAggressiveCaching(self): return self.getBoolean('aggressive_caching')
@@ -142,6 +145,10 @@ class MythSettings(object):
             'tv_guide_last_selected'     : '0',
             'upcoming_sort_by'           : 'Date',
             'upcoming_sort_ascending'    : 'False',
+            'comm_skip_default'          : 'True',
+            'comm_skip_rewind_secs'      : '0',
+            'comm_skip_wait_secs'        : '0',
+            'comm_skip_skip_on_jump'     : 'True'
         }
 
     def load(self):
@@ -207,6 +214,8 @@ class MythSettings(object):
         
         MythSettings.verifyBoolean(self.get('confirm_on_delete'), 'Confirm on delete must be True or False')
         MythSettings.verifyBoolean(self.get('aggressive_caching'), 'Aggressive Caching must be True or False')
+        MythSettings.verifyBoolean(self.get('comm_skip_default'), 'Commercial skipping by default must be True or False')
+        MythSettings.verifyBoolean(self.get('comm_skip_skip_on_jump'), 'Commercial skipping after seeking must be True or False')
         slog.debug('verified settings')
 
     def verifyMythTVConnectivity(self):
