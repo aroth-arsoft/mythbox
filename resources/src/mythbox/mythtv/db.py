@@ -522,7 +522,7 @@ class MythDatabase(object):
             order by 
                 c.chanid, 
                 p.starttime
-                """ % (-1*offset,-1*offset,
+                """ % (-1*self.getDbTimeOffset(),-1*self.getDbTimeOffset(),
                ','.join(map(lambda c: str(c.getChannelId()), channels)),
                        strStartTime, strEndTime,
                        strStartTime, strEndTime,
