@@ -45,6 +45,9 @@ class BaseProtocol(object):
     
     def protocolToken(self):
         return ""
+
+    def NeedBookmarkPad(self):
+    	return False
     
 
 class Protocol40(BaseProtocol):
@@ -383,6 +386,9 @@ class Protocol66(Protocol65):
     def writeLong(self, d, request):
         request.append('%d' % long(d))
 
+    def NeedBookmarkPad(self):
+    	return True
+
 
 class Protocol67(Protocol66):
     
@@ -536,6 +542,9 @@ class Protocol78(Protocol77):
 
     def protocolToken(self):
         return "IceBurns"
+
+    def NeedBookmarkPad(self): #Technically this changed mid protocol versions but they *didn't* increment it a8722faea68e8f7d2bb12f31bf78d6bc272dbdde
+    	return False
 
     def recordFields(self):
         # Copied from mythtv/mythtv/bindings/python/MythTV/mythproto.py
