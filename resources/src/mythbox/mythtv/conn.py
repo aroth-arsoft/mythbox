@@ -867,10 +867,6 @@ class Connection(object):
         tokens = ['SET_BOOKMARK', '%s' % program.getChannelId(), '%s' % program.recstarttimets()]
         self.protocol.writeLong(frameNumber, tokens)
         
-        # pad with 'dont_care' if frameNumber not split into high/low bytes
-        if len(tokens) == 4:
-            tokens.append('dont_care')
-        
         reply = self._sendRequest(self.cmdSock, [' '.join(tokens)])
         
         if reply[0] == 'OK':
