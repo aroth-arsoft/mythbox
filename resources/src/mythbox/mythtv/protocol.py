@@ -566,6 +566,33 @@ class Protocol78(Protocol77):
                  'video_props',  'subtitle_type','year',
                  'part_number',  'part_total']        
 
+class Protocol79(Protocol78):
+    def version(self):
+        return 79
+
+    def protocolToken(self):
+        return "BasaltGiant"
+
+    def recordFields(self):
+        # Copied from mythtv/mythtv/bindings/python/MythTV/mythproto.py
+        return  [ 'title',        'subtitle',     'description',
+        		 'season',       'episode',      'totalepisodes', 
+                 'syndicatedepisode',
+                 'category',     'chanid',       'channum',
+                 'callsign',     'channame',     'filename',
+                 'filesize',     'starttime',    'endtime',
+                 'findid',       'hostname',     'sourceid',
+                 'cardid',       'inputid',      'recpriority',
+                 'recstatus',    'recordid',     'rectype',
+                 'dupin',        'dupmethod',    'recstartts',
+                 'recendts',     'programflags', 'recgroup',
+                 'outputfilters','seriesid',     'programid',
+                 'inetref',      'lastmodified', 'stars',
+                 'airdate',      'playgroup',    'recpriority2',
+                 'parentid',     'storagegroup', 'audio_props',
+                 'video_props',  'subtitle_type','year',
+                 'part_number',  'part_total',   'categorytype']          
+
 # Current rev in mythversion.h
 protocols = {
     40: Protocol40(), # 0.21
@@ -601,6 +628,7 @@ protocols = {
     74: Protocol74(),  # 0.26 - no changes
     75: Protocol75(),  # 0.26 - no changes (time query changes)
     76: Protocol76(),   # 0.27 - Added part_number,part_total,syndicatedepisode
-    77: Protocol77(),   # 0.27 - Added part_number,part_total,syndicatedepisode
-    78: Protocol78()   # 0.28
+    77: Protocol77(),   # 0.27 - 
+    78: Protocol78(),   # 0.28 - bookmark pad change and record fields added totalepisodes
+    79: Protocol79()   # 0.28 - categorytype
 }    
