@@ -269,7 +269,7 @@
             <texturenofocus>button_nofocus.png</texturenofocus>
             <enabled>true</enabled>
             <pulseonselect>true</pulseonselect>
-            <onup>255</onup>
+            <onup>258</onup>
             <ondown>251</ondown>
         </control>
         
@@ -369,6 +369,21 @@
             <texturenofocus>button_nofocus.png</texturenofocus>
             <pulseonselect>true</pulseonselect>
             <onup>257</onup>
+            <ondown>258</ondown>
+        </control>
+        <control type="button" id="258">
+            <description>Back button</description>
+            <posx>0</posx>
+            <posy>280</posy>
+            <width>285</width>
+            <height>40</height>
+            <label>SCRIPT481</label>
+            <align>left</align>
+            <textoffsetx>40</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <onup>255</onup>
             <ondown>250</ondown>
         </control>
 

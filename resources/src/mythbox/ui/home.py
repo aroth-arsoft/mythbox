@@ -79,6 +79,7 @@ class HomeWindow(BaseWindow):
                 254 : self.goUpcomingRecordings,
                 256 : self.goSettings,
                 255 : self.refreshOnInit,
+                257 : self.goBack,
                 301 : self.deleteRecording,
                 302 : self.rerecordRecording,
                 ID_COVERFLOW_WRAPLIST : self.goPlayRecording
@@ -102,6 +103,15 @@ class HomeWindow(BaseWindow):
         buttonIds = [ID_COVERFLOW_POPUP,301,302]
         return self.getFocusId() in buttonIds
     
+    def goBack(self):
+        if self.shutdownPending:
+            return        
+        if self.isCoverFlowPopupActive():
+            self.setFocus(self.coverFlow)
+        else:
+            self.shutdown()
+            self.close()
+
     @catchall_ui
     def onAction(self, action):
         if self.shutdownPending:
@@ -110,11 +120,7 @@ class HomeWindow(BaseWindow):
         id = action.getId()
         
         if id in Action.GO_BACK:
-            if self.isCoverFlowPopupActive():
-                self.setFocus(self.coverFlow)
-            else:
-                self.shutdown()
-                self.close()
+            self.goBack()
         
         elif id == Action.CONTEXT_MENU and self.lastFocusId in (ID_COVERFLOW_GROUP, ID_COVERFLOW_WRAPLIST):
             self.setFocus(self.coverFlowPopup)

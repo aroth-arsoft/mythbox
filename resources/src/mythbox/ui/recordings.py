@@ -39,6 +39,7 @@ log = logging.getLogger('mythbox.ui')
 ID_GROUPS_LISTBOX         = 700
 ID_PROGRAMS_LISTBOX       = 600
 ID_REFRESH_BUTTON         = 250
+ID_GO_BACK_BUTTON         = 252
 ID_SORT_BY_BUTTON         = 251
 ID_RECORDING_GROUP_BUTTON = 253
 
@@ -212,7 +213,10 @@ class RecordingsWindow(BaseWindow):
         elif controlId == ID_REFRESH_BUTTON:
             self.lastSelected = self.programsListbox.getSelectedPosition()
             self.refresh(force=True)
-        
+            
+        elif controlId == ID_GO_BACK_BUTTON:
+        	self.goBack()
+
         elif controlId == ID_SORT_BY_BUTTON:
             keys = self.GROUP_SORT_BY.keys()
             self.groupSortBy = keys[(keys.index(self.groupSortBy) + 1) % len(keys)]
@@ -234,16 +238,19 @@ class RecordingsWindow(BaseWindow):
             
         self.settings.put('recordings_title_sort', self.titleSortBy)
         self.settings.put('recordings_group_sort', self.groupSortBy)
-                                     
+    
+    def goBack(self):
+        self.closed = True
+        self.saveSettings()
+        self.close()
+        self.bus.deregister(self)
+
     @catchall_ui
     def onAction(self, action):
         id = action.getId()
         
         if id in Action.GO_BACK:
-            self.closed = True
-            self.saveSettings()
-            self.close()
-            self.bus.deregister(self)
+        	self.goBack()
             
         elif id in (Action.UP, Action.DOWN, Action.PAGE_UP, Action.PAGE_DOWN, Action.HOME, Action.END):
 

@@ -60,6 +60,7 @@ class RecordingDetailsWindow(BaseWindow):
             self.rerecordButton = self.getControl(253)
             self.firstInQueueButton = self.getControl(254)
             self.refreshButton = self.getControl(255)
+            self.gobackButton = self.getControl(258)
             self.editScheduleButton = self.getControl(256)
             self.advancedButton = self.getControl(257)
             
@@ -71,6 +72,7 @@ class RecordingDetailsWindow(BaseWindow):
                 self.firstInQueueButton.getId(): self.moveToFrontOfJobQueue,
                 self.refreshButton.getId()     : self.refresh,
                 self.editScheduleButton.getId(): self.editSchedule,
+                self.gobackButton.getId()	   : self.goBack,
                 301:self.doCommFlag,
                 302:self.doTranscode,
                 303:self.doUserJob1,
@@ -240,16 +242,20 @@ class RecordingDetailsWindow(BaseWindow):
         buttonIds = [self.firstInQueueButton.getId(),300,301,302,303,304,305,306]
         return self.getFocusId() in buttonIds
 
+    def goBack(self):
+    	if self.isAdvancedBladeActive():
+            self.setFocus(self.advancedButton)
+        else:
+            self.close()
+
+
     @catchall_ui
     def onAction(self, action):
         log.debug('onAction %s ' % action.getId())
 
         id = action.getId()
         if id in Action.GO_BACK:
-            if self.isAdvancedBladeActive():
-                self.setFocus(self.advancedButton)
-            else:
-                self.close()
+            self.goBack()
         elif id == Action.PAGE_UP:
             self.previousRecording()
         elif id == Action.PAGE_DOWN:

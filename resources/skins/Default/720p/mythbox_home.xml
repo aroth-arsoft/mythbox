@@ -653,7 +653,17 @@
             <pulseonselect>true</pulseonselect>
             <enable>!substring(Window.Property(busy),true)</enable>
         </control>
-         
+        <control type="button" id="257">
+            <description>back</description>
+            <label>SCRIPT481</label>
+            <width>285</width>
+            <align>left</align>
+            <textoffsetx>33</textoffsetx>
+            <texturefocus>button_focus.png</texturefocus>
+            <texturenofocus>button_nofocus.png</texturenofocus>
+            <pulseonselect>true</pulseonselect>
+            <enable>!substring(Window.Property(busy),true)</enable>
+        </control>         
     </control>
     
     <control type="multiimage">

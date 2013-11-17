@@ -452,6 +452,5 @@ To submit translations for your native language
   <string id="477">After commercial skipping rewind this many seconds</string>
   <string id="478">Commercial skip if you seek to the middle of a commercial</string>
   <string id="479">Wait this many seconds into commercial before skipping</string>
-  
-
+  <string id="481">Back</string>
 </strings>

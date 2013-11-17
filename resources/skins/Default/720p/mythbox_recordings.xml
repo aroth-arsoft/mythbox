@@ -576,7 +576,7 @@
                 <pulseonselect>true</pulseonselect>
                 <onleft>600</onleft>
                 <onright>700</onright>
-                <onup>250</onup>
+                <onup>252</onup>
                 <ondown>250</ondown>
             </control>
             
@@ -592,6 +592,22 @@
                 <texturenofocus>button_nofocus.png</texturenofocus>
                 <pulseonselect>true</pulseonselect>
                 <onup>251</onup>
+                <ondown>252</ondown>
+                <onleft>600</onleft>
+                <onright>700</onright>
+            </control>
+            <control type="button" id="252">
+                <description>Back</description>
+                <posx>0</posx>
+                <posy>80</posy>
+                <label>SCRIPT481</label>
+                <width>285</width>
+                <align>left</align>
+                <textoffsetx>40</textoffsetx>
+                <texturefocus>button_focus.png</texturefocus>
+                <texturenofocus>button_nofocus.png</texturenofocus>
+                <pulseonselect>true</pulseonselect>
+                <onup>250</onup>
                 <ondown>251</ondown>
                 <onleft>600</onleft>
                 <onright>700</onright>
@@ -600,7 +616,7 @@
             
         <control type="image">
             <posx>30</posx>
-            <posy>190</posy>
+            <posy>230</posy>
             <width>230</width>
             <height>386</height>
             <aspectratio aligny="bottom">keep</aspectratio>
