@@ -68,7 +68,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT901</label>
+            <label>$ADDON[script.mythbox 901]</label>
         </control>
 
         <control type="label">
@@ -82,7 +82,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT902</label>
+            <label>$ADDON[script.mythbox 902]</label>
         </control>
 
         <control type="label">
@@ -96,7 +96,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT903</label>
+            <label>$ADDON[script.mythbox 903]</label>
         </control>
 
         <control type="label">
@@ -110,7 +110,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT904</label>
+            <label>$ADDON[script.mythbox 904]</label>
         </control>
 
         <control type="label">
@@ -124,7 +124,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>right</align>
             <aligny>center</aligny>
-            <label>SCRIPT905</label>
+            <label>$ADDON[script.mythbox 905]</label>
         </control>
 
         <!-- ============================================= -->
@@ -365,7 +365,7 @@
         <align>right</align>
         <aligny>center</aligny>
         <textcolor>ffddddff</textcolor>
-        <label>SCRIPT900</label>
+        <label>$ADDON[script.mythbox 900]</label>
         <animation effect="fade" time="200">WindowOpen</animation>
         <animation effect="fade" time="200">WindowClose</animation>
     </control>
@@ -441,7 +441,7 @@
 
             <control type="button" id="250">
                 <description>Refresh button</description>
-                <label>SCRIPT210</label>
+                <label>$ADDON[script.mythbox 210]</label>
                 <width>285</width>
                 <align>left</align>
                 <textoffsetx>40</textoffsetx>

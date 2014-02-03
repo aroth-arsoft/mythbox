@@ -155,7 +155,7 @@
             
             <control type="button" id="201">
                 <description>schedule type</description>
-                <label>SCRIPT1102</label>
+                <label>$ADDON[script.mythbox 1102]</label>
                 <label2>$INFO[Window.Property(scheduleType)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -168,7 +168,7 @@
             
             <control type="button" id="202">
                 <description>schedule priority</description>
-                <label>SCRIPT1103</label>
+                <label>$ADDON[script.mythbox 1103]</label>
                 <label2>$INFO[Window.Property(priority)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -181,7 +181,7 @@
              
             <control type="button" id="203">
                 <description>check for dupes using</description>   
-                <label>SCRIPT1104</label>
+                <label>$ADDON[script.mythbox 1104]</label>
                 <label2>$INFO[Window.Property(checkForDupesUsing)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -194,7 +194,7 @@
             
             <control type="button" id="204">
                 <description>check for dupes in</description>
-                <label>SCRIPT1105</label>
+                <label>$ADDON[script.mythbox 1105]</label>
                 <label2>$INFO[Window.Property(checkForDupesIn)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -207,7 +207,7 @@
 
             <control type="button" id="208">
                 <description>episode filter</description>
-                <label>SCRIPT1106</label>
+                <label>$ADDON[script.mythbox 1106]</label>
                 <label2>$INFO[Window.Property(episodeFilter)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -220,7 +220,7 @@
             
             <control type="radiobutton" id="205">
                 <description>autoflag commercials</description>
-                <label>SCRIPT1107</label>
+                <label>$ADDON[script.mythbox 1107]</label>
                 <width>650</width>
                 <height>35</height>
                 <font>font12</font>
@@ -234,7 +234,7 @@
             
             <control type="radiobutton" id="207">
                 <description>autoexpire</description>
-                <label>SCRIPT1108</label>
+                <label>$ADDON[script.mythbox 1108]</label>
                 <width>650</width>
                 <height>35</height>
                 <align>left</align>
@@ -248,7 +248,7 @@
 
             <control type="radiobutton" id="218">
                 <description>autotranscode</description>
-                <label>SCRIPT1109</label>
+                <label>$ADDON[script.mythbox 1109]</label>
                 <width>650</width>
                 <height>35</height>
                 <align>left</align>
@@ -262,7 +262,7 @@
 
             <control type="button" id="206">
                 <description>keep at most</description>
-                <label>SCRIPT1110</label>
+                <label>$ADDON[script.mythbox 1110]</label>
                 <label2>$INFO[Window.Property(maxEpisodes)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -275,7 +275,7 @@
 
             <control type="radiobutton" id="213">
                 <description>Record New and Expire Old CheckBox</description>
-                <label>SCRIPT1111</label>
+                <label>$ADDON[script.mythbox 1111]</label>
                 <width>650</width>
                 <height>35</height>
                 <align>left</align>
@@ -289,7 +289,7 @@
 
             <control type="button" id="209">
                 <description>start recording</description>
-                <label>SCRIPT1112</label>
+                <label>$ADDON[script.mythbox 1112]</label>
                 <label2>$INFO[Window.Property(startEarly)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -302,7 +302,7 @@
 
             <control type="button" id="210">
                 <description>end recording</description>
-                <label>SCRIPT1113</label>
+                <label>$ADDON[script.mythbox 1113]</label>
                 <label2>$INFO[Window.Property(endLate)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -315,7 +315,7 @@
 
             <control type="button" id="219">
                 <description>recording profile</description>
-                <label>SCRIPT1128</label>
+                <label>$ADDON[script.mythbox 1128]</label>
                 <label2>$INFO[Window.Property(recordingProfile)]</label2>
                 <width>650</width>
                 <height>35</height>
@@ -328,7 +328,7 @@
  
             <control type="radiobutton" id="214">
                 <description>userjob1</description>
-                <label>SCRIPT1124</label>
+                <label>$ADDON[script.mythbox 1124]</label>
                 <width>650</width>
                 <height>35</height>
                 <font>font12</font>
@@ -342,7 +342,7 @@
 
             <control type="radiobutton" id="215">
                 <description>userjob2</description>
-                <label>SCRIPT1125</label>
+                <label>$ADDON[script.mythbox 1125]</label>
                 <width>650</width>
                 <height>35</height>
                 <font>font12</font>
@@ -356,7 +356,7 @@
             
             <control type="radiobutton" id="216">
                 <description>userjob3</description>
-                <label>SCRIPT1126</label>
+                <label>$ADDON[script.mythbox 1126]</label>
                 <width>650</width>
                 <height>35</height>
                 <font>font12</font>
@@ -370,7 +370,7 @@
             
             <control type="radiobutton" id="217">
                 <description>userjob4</description>
-                <label>SCRIPT1127</label>
+                <label>$ADDON[script.mythbox 1127]</label>
                 <width>650</width>
                 <height>35</height>
                 <font>font12</font>
@@ -384,7 +384,7 @@
             
             <control type="radiobutton" id="212">
                 <description>schedule enabled</description>
-                <label>SCRIPT1114</label>
+                <label>$ADDON[script.mythbox 1114]</label>
                 <width>650</width>
                 <height>35</height>
                 <align>left</align>
@@ -408,7 +408,7 @@
             
             <control type="button" id="250">
                 <description>save</description>
-                <label>SCRIPT1120</label>
+                <label>$ADDON[script.mythbox 1120]</label>
                 <width>120</width>
                 <height>35</height>
                 <align>center</align>
@@ -418,7 +418,7 @@
 
             <control type="button" id="251">
                 <description>delete</description>
-                <label>SCRIPT1122</label>
+                <label>$ADDON[script.mythbox 1122]</label>
                 <width>120</width>
                 <height>35</height>
                 <align>center</align>
@@ -428,7 +428,7 @@
             
             <control type="button" id="252">
                 <description>cancel</description>
-                <label>SCRIPT1121</label>
+                <label>$ADDON[script.mythbox 1121]</label>
                 <width>120</width>
                 <height>35</height>
                 <align>center</align>

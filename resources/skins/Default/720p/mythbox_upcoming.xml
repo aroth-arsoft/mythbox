@@ -68,7 +68,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT1001</label>
+            <label>$ADDON[script.mythbox 1001]</label>
         </control>
 
         <control type="label">
@@ -82,7 +82,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT1002</label>
+            <label>$ADDON[script.mythbox 1002]</label>
         </control>
 
         <control type="label">
@@ -96,7 +96,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT1003</label>
+            <label>$ADDON[script.mythbox 1003]</label>
         </control>
 
         <control type="label">
@@ -110,7 +110,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT1004</label>
+            <label>$ADDON[script.mythbox 1004]</label>
         </control>
 
         <control type="label">
@@ -124,7 +124,7 @@
             <selectedcolor>FFe2ff43</selectedcolor>
             <align>left</align>
             <aligny>center</aligny>
-            <label>SCRIPT1005</label>
+            <label>$ADDON[script.mythbox 1005]</label>
         </control>
 
         <!-- ============================================= -->
@@ -467,7 +467,7 @@
       <align>right</align>
       <aligny>center</aligny>
       <textcolor>ffffffff</textcolor>
-      <label>SCRIPT1000</label>
+      <label>$ADDON[script.mythbox 1000]</label>
       <animation effect="fade" time="200">WindowOpen</animation>
       <animation effect="fade" time="200">WindowClose</animation>
     </control>
@@ -541,7 +541,7 @@
                 <description>Refresh button</description>
                 <posx>0</posx>
                 <posy>40</posy>
-                <label>SCRIPT210</label>
+                <label>$ADDON[script.mythbox 210]</label>
                 <width>285</width>
                 <align>left</align>
                 <textoffsetx>40</textoffsetx>

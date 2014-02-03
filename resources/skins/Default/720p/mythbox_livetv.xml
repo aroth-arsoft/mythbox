@@ -346,7 +346,7 @@
       <align>right</align>
       <aligny>center</aligny>
       <textcolor>ffffffff</textcolor>
-      <label>SCRIPT700</label>
+      <label>$ADDON[script.mythbox 700]</label>
       <animation effect="fade" time="200">WindowOpen</animation>
       <animation effect="fade" time="200">WindowClose</animation>
     </control>
@@ -388,7 +388,7 @@
           
           <control type="button" id="250">
               <description>Refresh button</description>
-              <label>SCRIPT210</label>
+              <label>$ADDON[script.mythbox 210]</label>
               <width>285</width>
               <align>left</align>
               <textoffsetx>40</textoffsetx>

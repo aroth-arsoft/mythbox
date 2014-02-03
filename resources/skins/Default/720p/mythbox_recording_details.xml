@@ -53,13 +53,13 @@
             <posx>320</posx>
             <posy>135</posy>
             <itemgap>32</itemgap>
-            <control type="label"><description>title</description><label>SCRIPT610</label></control>
-            <control type="label"><description>desc</description><label>SCRIPT611</label></control>
+            <control type="label"><description>title</description><label>$ADDON[script.mythbox 610]</label></control>
+            <control type="label"><description>desc</description><label>$ADDON[script.mythbox 611]</label></control>
             
-            <control type="label"><description>air date</description><label>SCRIPT612</label></control>
-            <control type="label"><description>channel</description><label>SCRIPT613</label></control>
+            <control type="label"><description>air date</description><label>$ADDON[script.mythbox 612]</label></control>
+            <control type="label"><description>channel</description><label>$ADDON[script.mythbox 613]</label></control>
             <!--
-            <control type="label"><description>category</description><label>SCRIPT614</label></control>
+            <control type="label"><description>category</description><label>$ADDON[script.mythbox 614]</label></control>
             -->
             <control type="label"><description>episode</description><label>Episode</label></control>
         </control>
@@ -71,9 +71,9 @@
             <itemgap>32</itemgap>
             <control type="label"><label>-</label></control>  <!-- spacing -->
             <control type="label"><label>-</label></control>  <!-- spacing -->
-            <control type="label"><description>orignal air date</description><label>SCRIPT615</label></control>
-            <control type="label"><description>size</description><label>SCRIPT616</label></control>
-            <control type="label"><description>comm breaks</description><label>SCRIPT617</label></control>
+            <control type="label"><description>orignal air date</description><label>$ADDON[script.mythbox 615]</label></control>
+            <control type="label"><description>size</description><label>$ADDON[script.mythbox 616]</label></control>
+            <control type="label"><description>comm breaks</description><label>$ADDON[script.mythbox 617]</label></control>
         </control>
 
         <!-- ============================================= -->
@@ -219,7 +219,7 @@
       <align>right</align>
       <aligny>center</aligny>
       <textcolor>ffffffff</textcolor>
-      <label>SCRIPT600</label>
+      <label>$ADDON[script.mythbox 600]</label>
       <animation effect="fade" time="200">WindowOpen</animation>
       <animation effect="fade" time="200">WindowClose</animation>
     </control>
@@ -262,7 +262,7 @@
             <posy>0</posy>
             <width>285</width>
             <height>40</height>
-            <label>SCRIPT601</label>
+            <label>$ADDON[script.mythbox 601]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -279,7 +279,7 @@
             <width>285</width>
             <height>40</height>
             <description>Play+Skip button</description>
-            <label>SCRIPT602</label>
+            <label>$ADDON[script.mythbox 602]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -295,7 +295,7 @@
             <width>285</width>
             <height>40</height>
             <description>Delete button</description>
-            <label>SCRIPT603</label>
+            <label>$ADDON[script.mythbox 603]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -311,7 +311,7 @@
             <posy>120</posy>
             <width>285</width>
             <height>40</height>
-            <label>SCRIPT604</label>
+            <label>$ADDON[script.mythbox 604]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -327,7 +327,7 @@
             <posy>160</posy>
             <width>285</width>
             <height>40</height>
-            <label>SCRIPT605</label>
+            <label>$ADDON[script.mythbox 605]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -343,7 +343,7 @@
             <posy>200</posy>
             <width>285</width>
             <height>40</height>
-            <label>SCRIPT440</label>
+            <label>$ADDON[script.mythbox 440]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -362,7 +362,7 @@
             <posy>240</posy>
             <width>285</width>
             <height>40</height>
-            <label>SCRIPT210</label>
+            <label>$ADDON[script.mythbox 210]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -377,7 +377,7 @@
             <posy>280</posy>
             <width>285</width>
             <height>40</height>
-            <label>SCRIPT481</label>
+            <label>$ADDON[script.mythbox 481]</label>
             <align>left</align>
             <textoffsetx>40</textoffsetx>
             <texturefocus>button_focus.png</texturefocus>
@@ -429,7 +429,7 @@
           <control type="button" id="254">
               <description>Move to first job in Queue Button</description>
               <width>270</width>
-              <label>SCRIPT606</label>
+              <label>$ADDON[script.mythbox 606]</label>
               <textoffsetx>40</textoffsetx>
               <texturefocus>button_focus.png</texturefocus>
               <texturenofocus>button_nofocus.png</texturenofocus>
@@ -450,7 +450,7 @@
           <control type="button" id="301">
               <description>Flag Commercials</description>
               <width>270</width>
-              <label>SCRIPT129</label>
+              <label>$ADDON[script.mythbox 129]</label>
               <textoffsetx>40</textoffsetx>
               <texturefocus>button_focus.png</texturefocus>
               <texturenofocus>button_nofocus.png</texturenofocus>
@@ -464,7 +464,7 @@
               <texturefocus>button_focus.png</texturefocus>
               <texturenofocus>button_nofocus.png</texturenofocus>
               <pulseonselect>true</pulseonselect>
-              <label>SCRIPT252</label>
+              <label>$ADDON[script.mythbox 252]</label>
               <onclick>SetFocus(257)</onclick>
           </control>
           <control type="button" id="303">

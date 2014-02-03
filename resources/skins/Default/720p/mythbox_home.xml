@@ -78,7 +78,7 @@
                     <selectedcolor>FFe2ff43</selectedcolor>
                     <align>left</align>
                     <aligny>center</aligny>
-                    <label>SCRIPT310</label>
+                    <label>$ADDON[script.mythbox 310]</label>
                 </control>
         
                 <control type="label">
@@ -92,7 +92,7 @@
                     <selectedcolor>FFe2ff43</selectedcolor>
                     <align>left</align>
                     <aligny>center</aligny>
-                    <label>SCRIPT311</label>
+                    <label>$ADDON[script.mythbox 311]</label>
                 </control>
         
                 <!-- ============================================= -->
@@ -244,7 +244,7 @@
                     <selectedcolor>FFe2ff43</selectedcolor>
                     <align>left</align>
                     <aligny>center</aligny>
-                    <label>SCRIPT312</label>
+                    <label>$ADDON[script.mythbox 312]</label>
                 </control>
                 <control type="label">
                     <description>Job status</description>
@@ -257,7 +257,7 @@
                     <selectedcolor>FFe2ff43</selectedcolor>
                     <align>left</align>
                     <aligny>center</aligny>
-                    <label>SCRIPT311</label>
+                    <label>$ADDON[script.mythbox 311]</label>
                 </control>
         
                 <!-- ============================================= -->
@@ -571,7 +571,7 @@
         
         <control type="button" id="250" >
             <description>watch recordings</description>
-            <label>SCRIPT300</label>
+            <label>$ADDON[script.mythbox 300]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -584,7 +584,7 @@
         
         <control type="button" id="251">
             <description>watch tv</description>
-            <label>SCRIPT301</label>
+            <label>$ADDON[script.mythbox 301]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -596,7 +596,7 @@
         
         <control type="button" id="252">
             <description>tv guide</description>     
-            <label>SCRIPT302</label>
+            <label>$ADDON[script.mythbox 302]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -608,7 +608,7 @@
 
         <control type="button" id="253">
             <description>recording schedules</description>
-            <label>SCRIPT303</label>
+            <label>$ADDON[script.mythbox 303]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -620,7 +620,7 @@
 
         <control type="button" id="254">
             <description>upcoming recordings</description>
-            <label>SCRIPT304</label>
+            <label>$ADDON[script.mythbox 304]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>32</textoffsetx> <!-- scrolls if > 32 -->
@@ -632,7 +632,7 @@
 
         <control type="button" id="256">
             <description>settings</description>
-            <label>SCRIPT305</label>
+            <label>$ADDON[script.mythbox 305]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -644,7 +644,7 @@
 
         <control type="button" id="255">
             <description>refresh</description>
-            <label>SCRIPT210</label>
+            <label>$ADDON[script.mythbox 210]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -655,7 +655,7 @@
         </control>
         <control type="button" id="257">
             <description>back</description>
-            <label>SCRIPT481</label>
+            <label>$ADDON[script.mythbox 481]</label>
             <width>285</width>
             <align>left</align>
             <textoffsetx>33</textoffsetx>
@@ -690,7 +690,7 @@
         <align>left</align>
         <aligny>center</aligny>
         <wrapmultiline>false</wrapmultiline>
-        <label>$INFO[Window.Property(newsfeed)]</label>
+<!--        <label>$INFO[Window.Property(newsfeed)]</label> -->
     </control>
         
   </controls>

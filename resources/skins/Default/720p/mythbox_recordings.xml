@@ -101,7 +101,7 @@
                 <selectedcolor>FFe2ff43</selectedcolor>
                 <align>left</align>
                 <aligny>center</aligny>
-                <label>SCRIPT854</label>
+                <label>$ADDON[script.mythbox 854]</label>
             </control>
     
             <control type="label">
@@ -115,7 +115,7 @@
                 <selectedcolor>FFe2ff43</selectedcolor>
                 <align>left</align>
                 <aligny>center</aligny>
-                <label>SCRIPT212</label>
+                <label>$ADDON[script.mythbox 212]</label>
             </control>
     
             <!-- 
@@ -130,7 +130,7 @@
                 <selectedcolor>FFe2ff43</selectedcolor>
                 <align>left</align>
                 <aligny>center</aligny>
-                <label>SCRIPT161</label>
+                <label>$ADDON[script.mythbox 161]</label>
             </control>
             -->
             
@@ -283,7 +283,7 @@
                 <selectedcolor>FFe2ff43</selectedcolor>
                 <align>left</align>
                 <aligny>center</aligny>
-                <label>SCRIPT211</label>
+                <label>$ADDON[script.mythbox 211]</label>
             </control>
     
             <control type="label">
@@ -297,7 +297,7 @@
                 <selectedcolor>FFe2ff43</selectedcolor>
                 <align>left</align>
                 <aligny>center</aligny>
-                <label>SCRIPT212</label>
+                <label>$ADDON[script.mythbox 212]</label>
             </control>
     
             <control type="label">
@@ -311,7 +311,7 @@
                 <selectedcolor>FFe2ff43</selectedcolor>
                 <align>left</align>
                 <aligny>center</aligny>
-                <label>SCRIPT161</label>
+                <label>$ADDON[script.mythbox 161]</label>
             </control>
     
 <!--  Programs Listbox -->
@@ -506,7 +506,7 @@
         <align>right</align>
         <aligny>center</aligny>
         <textcolor>ffddddff</textcolor>
-        <label>SCRIPT500</label>
+        <label>$ADDON[script.mythbox 500]</label>
         <animation effect="fade" time="200">WindowOpen</animation>
         <animation effect="fade" time="200">WindowClose</animation>
     </control>
@@ -584,7 +584,7 @@
                 <description>Refresh button</description>
                 <posx>0</posx>
                 <posy>40</posy>
-                <label>SCRIPT210</label>
+                <label>$ADDON[script.mythbox 210]</label>
                 <width>285</width>
                 <align>left</align>
                 <textoffsetx>40</textoffsetx>
@@ -600,7 +600,7 @@
                 <description>Back</description>
                 <posx>0</posx>
                 <posy>80</posy>
-                <label>SCRIPT481</label>
+                <label>$ADDON[script.mythbox 481]</label>
                 <width>285</width>
                 <align>left</align>
                 <textoffsetx>40</textoffsetx>
