@@ -36,6 +36,11 @@ if __name__ == '__main__':
     scriptDir = xbmcaddon.Addon('script.mythbox').getAddonInfo('path')
     sys.path.insert(0, os.path.join(scriptDir, 'resources', 'src'))
 
+    tempdir_name = os.environ.get('ANDROID_EXTERNAL_DATA_PATH', '')+'/tmp'
+    if not os.path.isdir(tempdir_name):
+        tempdir = os.mkdir(tempdir_name, 770)
+    os.environ['TMPDIR'] = tempdir_name
+
     import xbmcgui
     import xbmc
     splash = None
